@@ -17,6 +17,8 @@ public class SubtitlesManager : MonoBehaviour
 
     void Start()
     {
+        Debug.Log("Start!");
+
         _isDialoguePlaying = false;
         _subtitlePanel.SetActive(false);
         _story = new Story(_inkAsset.text);
@@ -29,14 +31,14 @@ public class SubtitlesManager : MonoBehaviour
         _story.ChoosePathString(pathString);
         _isDialoguePlaying = true;
         _subtitlePanel.SetActive(true);
-        TriggerNextLine();
+        StartCoroutine(TriggerNextLine());
     }
 
     private IEnumerator TriggerNextLine()
     {
         while (_story.canContinue)
         {
-            float time = _story.currentText.Length * _textSpeed;
+            float time = _story.currentText.Length * _textSpeed + .2f;
             _subtitleText.text = _story.Continue();
 
             yield return new WaitForSeconds(time);
