@@ -86,11 +86,11 @@ I could afford to be there.
 There was the rose taped against a wall
 I fancied it
 I wanted it pink
-And lit up by an orange street light
-Once could see it, just under a great graffiti
+lit up by an orange street light
+One could see it, just under a big graffiti
 But that would require going out
 That would require
-A position and a destination
+A starting point, and somewhere to go
 That would require
 All the life that’s left in a jar
 As it should
