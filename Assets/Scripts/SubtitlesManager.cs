@@ -21,6 +21,13 @@ public class SubtitlesManager : MonoBehaviour
 
     void Start()
     {
+        InitializeSubtitles();
+
+        //StartSubtitles("first");
+    }
+
+    public void InitializeSubtitles()
+    {
         // shuffle a copy of the list
         _shuffledPathStrings = _basePathStrings.ToList();
         Debug.Log(_shuffledPathStrings);
@@ -31,13 +38,11 @@ public class SubtitlesManager : MonoBehaviour
         _isDialoguePlaying = false;
         _subtitlePanel.SetActive(false);
         _story = new Story(_inkAsset.text);
-
-        StartSubtitles("first");
-        _shuffledPathStrings.Remove("first");
     }
 
     public void StartSubtitles(string pathString)
     {
+        _shuffledPathStrings.Remove(pathString);
         _story.ChoosePathString(pathString);
         _isDialoguePlaying = true;
         StartCoroutine(TriggerNextLine());
@@ -45,14 +50,20 @@ public class SubtitlesManager : MonoBehaviour
 
     private IEnumerator TriggerNextLine()
     {
+        yield return new WaitForSeconds(2f);
+
         Debug.Log(_shuffledPathStrings.Count);
-        if (_shuffledPathStrings.Count == 0) yield break;
+        if (_shuffledPathStrings.Count == 0)
+        {
+            FindFirstObjectByType<GameManager>().EndGame();
+            yield break;
+        }
 
         // display new text and waits between lines
         while (_story.canContinue)
         {
             _subtitlePanel.SetActive(true);
-            float time = _story.currentText.Length * _textSpeed + .2f;
+            float time = _story.currentText.Length * _textSpeed + .5f;
             _subtitleText.text = _story.Continue();
 
             yield return new WaitForSeconds(time);
